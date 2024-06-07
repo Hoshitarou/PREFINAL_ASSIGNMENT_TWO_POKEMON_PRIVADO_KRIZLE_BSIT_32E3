@@ -1,0 +1,98 @@
+@model PokemonApp.Models.DetailedPokemon
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+
+<head>
+<style>
+  p,h1 {
+  padding: 0;
+  margin: 0;
+  }
+  .details {
+  gap:8px;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  
+  }
+  .details h1 {
+  font-size: 2rem;
+  }
+  .dsc {
+  display: flex;
+  font-size: 1.6rem;
+  gap: 0.4rem;
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  }
+  .dsc div {
+  display:flex;
+  gap:8px;
+  }
+    
+  .type-badge{
+   background-color: dodgerblue;
+   padding: 0px 5px; 
+   border-radius: 4px;
+   color: white;
+  }
+  .col {
+  flex-direction:column;
+  }
+  .move-ctn {
+  display:flex;
+  flex-wrap: wrap;
+  }
+</style>
+</head>
+
+<div class="pokemon-details text-center" style="margin-top: 4.5rem">
+    <img src="@Model.Sprites.Other.DreamWorld.FrontDefault" alt="@Model.Name" class="img-fluid"/>
+    <div class="details">
+      <h1 class="text-left">Pokemon Details</h1>
+
+      <div class="dsc">
+        <span>Name: </span> 
+        <p>@Model.Name</p>
+      </div>
+
+      <div class="dsc">
+       <span>Type(s): </span>
+        <div>
+          @foreach (var type in Model.Types) {
+            <p class="type-badge">@type.Type.Name</p>
+          }
+        </div>
+      </div>
+
+      <div class="dsc">
+       <span>Abilities: </span>
+        <div>
+          @foreach (var ability in Model.Abilities) {
+            <p class="type-badge">@ability.Ability.Name</p>
+          }
+        </div>
+      </div>
+
+      <div class="dsc col">
+       <p>Moves <span style="color:gray; font-size:1.4rem;">(Moves Pokemon can learn)</span>:</p>
+        <div class="move-ctn">
+          @foreach (var move in Model.Moves) {
+            <p class="type-badge">@move.Move.Name</p>
+          }
+        </div>
+      </div>
+
+
+ 
+
+
+    </div>
+      <!-- Add more detailed information as needed -->
+</div>
+

@@ -1,0 +1,90 @@
+﻿@model List<PokemonApp.Models.Pokemon>  
+@{
+    ViewData["Title"] = "Home Page";
+    int totalCount = ViewBag.TotalCount;
+    int pageSize = ViewBag.PageSize;
+    int currentPage = ViewBag.Page;
+    int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+}
+
+  <head>
+    <style>
+     .ctn {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+        gap:1.5rem;
+    }
+     .card {
+        padding: 6px;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    border: 2px solid lightgray;
+             }
+      .card p {
+      text-transform: capitalize;
+      font-size: 1.5em;
+    }
+    .card:hover {
+    color: blue;
+    border-color: blue;
+    }
+     .card-img {
+        width: 130px;
+        height:130px;
+     }
+
+  
+    </style>
+
+  </head>
+ 
+
+<div class="text-left">
+    <h1 class="display-6">List of Pokemons</h1>
+
+ <div class="ctn">
+    @foreach (var pokemon in Model)
+    {
+        <a class="card" href='/pokemon/@pokemon.Id'>
+            <img src="@pokemon.SpriteUrl" class="card-img"/>
+            <p>@pokemon.Name</p>
+        </a>
+    }
+ </div>
+ @if (ViewBag.TotalCount > ViewBag.PageSize)
+{
+   
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="?page=@(currentPage - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            @if (i >= currentPage - 2 && i <= currentPage + 2)
+            {
+                <li class="page-item @(currentPage == i ? "active" : "")">
+                    <a class="page-link" href="?page=@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="?page=@(currentPage + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+}
+
+</div>
+
+
